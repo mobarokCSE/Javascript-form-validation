@@ -1,0 +1,176 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- Bootstrap CSS -->
+    <!-- <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous"> -->
+    <link rel="stylesheet" href="assets/css/style.css">
+    <title>Hello, world!</title>
+</head>
+
+<body>
+    <div class="container">
+        <div class="header">
+            <h2 class="header-text">Create Account</h2>
+        </div>
+        <form class="form" id="form" onkeyup="validate()">
+            <div class="form-control">
+                <level>Username</level>
+                <input type="text" name="" placeholder="Enter Name" id="username" autocomplete="off">
+                <i class="fas fa-check-circle"></i>
+                <i class="fas fa-exclamation-circle"></i>
+                <small>Error Message</small>
+            </div>
+            <div class="form-control">
+                <level>Email</level>
+                <input type="email" name="" placeholder="Enter email" id="email" autocomplete="off">
+                <i class="fas fa-check-circle"></i>
+                <i class="fas fa-exclamation-circle"></i>
+                <small>Error Message</small>
+            </div>
+            <div class="form-control">
+                <level>Password</level>
+                <input type="password" name="" placeholder="******" id="password" autocomplete="off">
+                <i class="fas fa-check-circle"></i>
+                <i class="fas fa-exclamation-circle"></i>
+                <small>Error Message</small>
+            </div>
+            <div class="form-control">
+                <level>Conform Password</level>
+                <input type="password" name="" placeholder="******" id="Cpassword" autocomplete="off">
+                <i class="fas fa-check-circle"></i>
+                <i class="fas fa-exclamation-circle"></i>
+                <small>Error Message</small>
+            </div>
+            <!-- <button class="btn" value="Submit" type="submit">Submit</button> -->
+            <input type="submit" class="btn" value="Submit">
+        </form>
+    </div>
+
+
+
+    <!-- <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous">
+    </script> -->
+    <!-- jquery use cdn link minified -->
+    <!-- <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script> -->
+
+    <script src="https://kit.fontawesome.com/99c7c9baf3.js"></script>
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+
+    <!-- <script src="assets/js/jquery-3.6.0.min.js"></script> -->
+
+    <!-- <script src="assets/js/javascript.js"></script> -->
+
+    <script>
+        const form = document.getElementById('form');
+        const username = document.getElementById('username');
+        const email = document.getElementById('email');
+        const password = document.getElementById('password');
+        const cpassword = document.getElementById('cpassword');
+
+        form.addEventListener('submit', (event) => {
+            event.preventDefault();
+            validate();
+        })
+
+        const sendData = (usernameVal, sRate, count) => {
+            if (sRate === count) {
+                alert('Registration Successful');
+                swal("Welcome!" + usernameVal, "Registration Successful", "success");
+                location.href = `demo.html?username=${usernameVal}`
+            }
+        }
+
+        // for final data validation
+        const successMsg = (usernameVal) => {
+            let formCon = document.getElementsByClassName('form-control');
+            for (var i = 0; i <= formCon.length; i++) {
+                var count = formCon.length - 1;
+                if (formCon[i].className === "form-control success") {
+                    var sRate = 0 + i;
+                    sendData(usernameVal, sRate, count);
+                } else {
+                    return false;
+                }
+            }
+        }
+
+        // more email validation
+        const isEmail = (emailVal) => {
+            var atSymbol = emailVal.indexOf("@");
+            if (atSymbol < 1) return false;
+            var dot = emailVal.lastIndexOf('.');
+            if (dot <= atSymbol + 2) return false;
+            if (dot === emailVal.length - 1) return false;
+            return true;
+        }
+
+        // define the validate function
+
+        const validate = () => {
+            const usernameVal = username.value.trim();
+            const emailVal = email.value.trim();
+            const passwordVal = password.value.trim();
+            // const cpasswordVal = cpassword.value.trim();
+
+            // validate Username
+            if (usernameVal === " ") {
+                setErrorMsg(username, 'Username can not blank');
+            } else if (usernameVal <= '2') {
+                setErrorMsg(username, 'Username min 3 character');
+            } else {
+                setSuccessMsg(username);
+            }
+
+            // validate email
+            if (emailVal === "") {
+                setErrorMsg(email, 'email can not blank');
+            } else if (!isEmail(emailVal)) {
+                setErrorMsg(emailVal, 'email not valid');
+            } else {
+                setSuccessMsg(email);
+            }
+
+            // validate password
+            if (passwordVal === "") {
+                setErrorMsg(password, 'email can not blank');
+            } else if (passwordVal <= 5) {
+                setErrorMsg(password, 'Minimum 6 character');
+            } else {
+                setSuccessMsg(password);
+            }
+            // validate Conform password
+            // if (cpasswordVal === "") {
+            //     setErrorMsg(cpassword, 'Conform password can not blank');
+            // } else if (cpasswordVal != passwordVal) {
+            //     setErrorMsg(cpassword, 'Conform password not matching');
+            // } else {
+            //     setSuccessMsg(cpassword);
+            // }
+            successMsg(usernameVal);
+
+
+
+            function setErrorMsg(input, errormsgs) {
+                const formControl = input.parentElement;
+                const small = formControl.querySelector('small');
+                formControl.className = "form-control error";
+                small.innerText = errormsgs;
+            }
+
+            function setErrorMsg(input, errormsgs) {
+                const formControl = input.parentElement;
+                formControl.className = "form-control success";
+            }
+        }
+    </script>
+
+</body>
+
+</html>
