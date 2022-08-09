@@ -53,7 +53,7 @@ body{
     display: block;
     font-size: 14px;
     padding: 12px;
-    /* outline: none; */
+    outline: none;
 }
 .form-control input :focus {
     outline: 0;
@@ -67,10 +67,13 @@ body{
     border-color: #e74c3c;
 }
 
+
+
+/* icon  */
 .form-control i {
     position: absolute;
-    right: 20px;
-    top: 47px;
+    right: 12px;
+    top: 32px;
     visibility: hidden;
 }
 .form-control.success i.fa-check-circle {
@@ -90,6 +93,8 @@ body{
 .form-control.error small{
     visibility: visible;
 }
+
+
 
 
 .form .btn{
